@@ -9,6 +9,7 @@ from datetime import timedelta as td
 import os.path
 import warnings
 import getpass
+import pywhatkit
 print("v.1.0")
 
 
@@ -20,6 +21,10 @@ options.set_preference("general.useragent.override","Mozilla/5.0 (Windows NT 10.
 driver = webdriver.Firefox(executable_path=r"F:\PyTHON\School_food\geckodriver.exe")
 
 username = getpass.getuser()
+
+
+def send_message(phone,message):
+    pywhatkit.sendwhatmsg_instantly(phone_no=phone,message=message)
 
 
 def schedule():
@@ -49,6 +54,7 @@ def food_file_exists():
             driver.quit()
         else:
             print("[INFO] Файл еще не отправлен!")
+            send_message("+79787229510","[INFO] Файл еще не отправлен")
             driver.close()
             driver.quit()
 
@@ -109,19 +115,27 @@ def mail_download():
             print("[INFO] Вложений нет - идём дальше...")
             continue
         reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
+
+
         searched_file = driver.find_element_by_xpath(
             "/html/body/div[5]/div/div[1]/div[1]/div/div[2]/span/div[2]/div/div/div/div/div/div/div[2]/div[1]/div[3]/div/div[1]/div[1]/div/div/div/div/div/div[1]/div/div/div[1]/div/div[2]/small")
         sleep(2)
-        if sender.text == "Al Martyn" and searched_file.text == f"2021-ММ-ДД-sm на {time_now()}— копия.xlsx":
-            action = ActionChains(driver)
-            action.move_to_element(reveal_the_small).perform()
-            download_file = driver.find_element_by_link_text("Скачать")
 
-            action.move_to_element(download_file).click(download_file).perform()
-            sleep(2)
-            print("[INFO] Качаем файл")
-            print("[INFO] Файл найден и успешно сохранен!")
-            break
+
+
+        if sender.text == "Al Martyn":
+            if searched_file.text == f"2021-ММ-ДД-sm на {time_now()}— копия.xlsx":
+                action = ActionChains(driver)
+                action.move_to_element(reveal_the_small).perform()
+                download_file = driver.find_element_by_link_text("Скачать")
+                action.move_to_element(download_file).click(download_file).perform()
+                sleep(2)
+                print("[INFO] Качаем файл")
+                print("[INFO] Файл найден и успешно сохранен!")
+                break
+            else:
+                print("[INFO] В письме отсутствует файл на нужную дату!")
+                continue
         else:
             continue
 
@@ -182,9 +196,6 @@ def school_upload():
 def file_delete():
     print("[INFO] Удаляем загруженный файл")
     pass
-    
-
-
 
 
 
