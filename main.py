@@ -54,7 +54,7 @@ def food_file_exists():
             driver.quit()
         else:
             print("[INFO] Файл еще не отправлен!")
-            send_message("+79787229510","[INFO] Файл еще не отправлен")
+            # send_message("+79787229510","[INFO] Файл еще не отправлен")
             driver.close()
             driver.quit()
 
@@ -117,6 +117,7 @@ def mail_download():
                 reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
             except Exception as ex:
                 print("[INFO] Вложений нет - идём дальше...")
+
                 continue
             reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
             searched_file = driver.find_element_by_xpath("/html/body/div[5]/div/div[1]/div[1]/div/div[2]/span/div[2]/div/div/div/div/div/div/div[2]/div[1]/div[3]/div/div[1]/div[1]/div/div/div/div/div/div[1]/div/div/div[1]/div/div[2]/small")
