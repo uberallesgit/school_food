@@ -109,21 +109,18 @@ def mail_download():
         driver.implicitly_wait(20)
         sender = driver.find_element_by_class_name("letter-contact.letter-contact_pony-mode")
         sleep(2)
-        try:
-            reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
-        except Exception as ex:
-            print("[INFO] Вложений нет - идём дальше...")
+        if sender.text != "Al Martyn":
+            print("[INFO] Не тот отправитель")
             continue
-        reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
-
-
-        searched_file = driver.find_element_by_xpath(
-            "/html/body/div[5]/div/div[1]/div[1]/div/div[2]/span/div[2]/div/div/div/div/div/div/div[2]/div[1]/div[3]/div/div[1]/div[1]/div/div/div/div/div/div[1]/div/div/div[1]/div/div[2]/small")
-        sleep(2)
-
-
-
-        if sender.text == "Al Martyn":
+        else:
+            try:
+                reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
+            except Exception as ex:
+                print("[INFO] Вложений нет - идём дальше...")
+                continue
+            reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
+            searched_file = driver.find_element_by_xpath("/html/body/div[5]/div/div[1]/div[1]/div/div[2]/span/div[2]/div/div/div/div/div/div/div[2]/div[1]/div[3]/div/div[1]/div[1]/div/div/div/div/div/div[1]/div/div/div[1]/div/div[2]/small")
+            sleep(2)
             if searched_file.text == f"2021-ММ-ДД-sm на {time_now()}— копия.xlsx":
                 action = ActionChains(driver)
                 action.move_to_element(reveal_the_small).perform()
@@ -136,8 +133,8 @@ def mail_download():
             else:
                 print("[INFO] В письме отсутствует файл на нужную дату!")
                 continue
-        else:
-            continue
+
+
 
 
 
