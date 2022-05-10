@@ -191,7 +191,7 @@ def school_upload():
     sleep(10)
 
 def file_delete():
-    print("[INFO] Удаляем загруженный файл")
+    print("[INFO] Удаляем загруженный файл с компьютера")
     pass
 
 
