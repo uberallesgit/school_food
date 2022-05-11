@@ -11,21 +11,15 @@ import warnings
 import getpass
 import pywhatkit
 print("v.1.0")
-
-
 warnings.filterwarnings("ignore")#отключение предупреждений об устаревшем стиле
-
-
 options = webdriver.FirefoxOptions()
 options.set_preference("general.useragent.override","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36")
 driver = webdriver.Firefox(executable_path=r"F:\PyTHON\School_food\geckodriver.exe")
-
 username = getpass.getuser()
 
 
 def send_message(phone,message):
     pywhatkit.sendwhatmsg_instantly(phone_no=phone,message=message)
-
 
 def schedule():
     pass
@@ -64,7 +58,6 @@ def food_file_exists():
 
 def mail_login():
     print("[INFO] Авторизуемся  на почте")
-
     driver.get("https://auth.mail.ru/cgi-bin/auth?from=portal")
     driver.implicitly_wait(20)
     try:
@@ -141,7 +134,6 @@ def mail_download():
 
 def school_login():
     print("[INFO] Авторизуемся на школьном сайте")
-
     driver.get("https://school-perv.educrimea.ru/user/login")
     driver.implicitly_wait(20)
     login_field = driver.find_element_by_id("loginform-email")
@@ -176,7 +168,6 @@ def school_upload():
     sleep(5)
     hover = driver.find_element_by_css_selector("div.ui-button:nth-child(3)")
     sleep(4)
-
     action.move_to_element(hover).perform()
     sleep(3)
     choose_file = driver.find_element_by_xpath("//input[@type='file']")
@@ -194,10 +185,6 @@ def school_upload():
 def file_delete():
     print("[INFO] Удаляем загруженный файл с компьютера")
     pass
-
-
-
-
 
 
 
