@@ -81,16 +81,16 @@ def mail_login():
         driver.implicitly_wait(20)
     except selenium.common.exceptions.NoSuchElementException:
         input_name = driver.find_element_by_id("login")
-        driver.implicitly_wait(20)
+        sleep(2)
         input_name.send_keys("alex.martyn0284")
-        driver.implicitly_wait(20)
+        sleep(2)
         input_password_field = driver.find_element_by_id("password")
-        driver.implicitly_wait(20)
+        sleep(2)
         input_password_field.send_keys("Reremedy1")
-        driver.implicitly_wait(20)
+        sleep(2)
         accept_credentials_button = driver.find_element_by_id("EnterBtn")
         accept_credentials_button.click()
-        driver.implicitly_wait(20)
+        sleep(2)
 
 
 
