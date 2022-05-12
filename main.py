@@ -10,12 +10,14 @@ import os.path
 import warnings
 import getpass
 import pywhatkit
+
 print("v.1.0")
 warnings.filterwarnings("ignore")#отключение предупреждений об устаревшем стиле
 options = webdriver.FirefoxOptions()
 options.set_preference("general.useragent.override","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36")
 driver = webdriver.Firefox(executable_path=r"F:\PyTHON\School_food\geckodriver.exe")
 username = getpass.getuser()
+path_to_downloads = os.path.expanduser(r'~\Downloads')
 
 
 def send_message(phone,message):
@@ -32,7 +34,7 @@ def time_now():
 
 
 def food_file_exists():
-    if os.path.exists(rf"C:\Users\{username}\Downloads\2021-ММ-ДД-sm на {time_now()}— копия.xlsx"):
+    if os.path.exists(rf"{path_to_downloads}\2021-ММ-ДД-sm на {time_now()}— копия.xlsx"):
         print("[INFO] Нужный файл найден  в папке 'Загрузки', поэтому переходим сразу к школьному сайту")
         school_login()
         school_upload()
@@ -41,7 +43,7 @@ def food_file_exists():
     else:
         mail_login()
         mail_download()
-        if os.path.exists(rf"C:\Users\{username}\Downloads\2021-ММ-ДД-sm на {time_now()}— копия.xlsx"):
+        if os.path.exists(rf"{path_to_downloads}\2021-ММ-ДД-sm на {time_now()}— копия.xlsx"):
             school_login()
             school_upload()
             driver.close()
