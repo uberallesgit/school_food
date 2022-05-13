@@ -10,6 +10,16 @@ import os.path
 import warnings
 import getpass
 import pywhatkit
+from pyfiglet import figlet_format
+from termcolor import colored
+
+ascii_art = figlet_format("SCHOOL","smslant")
+ascii_art2 = figlet_format("F O O D","smslant")
+print(colored(ascii_art,"yellow"))
+print(colored(ascii_art2,"yellow"))
+
+
+
 
 print("v.1.0")
 warnings.filterwarnings("ignore")#отключение предупреждений об устаревшем стиле
@@ -23,18 +33,15 @@ path_to_downloads = os.path.expanduser(r'~\Downloads')
 def send_message(phone,message):
     pywhatkit.sendwhatmsg_instantly(phone_no=phone,message=message)
 
-def schedule():
-    pass
 def time_now():
     today_is = dt.today()
     return today_is.strftime("%d.%m.%Y")
     print(time_now())
 
 
-
-
 def food_file_exists():
-    if os.path.exists(rf"{path_to_downloads}\2021-ММ-ДД-sm на {time_now()}— копия.xlsx"):
+    if os.path.exists(rf"{path_to_downloads}\2021-ММ-ДД-sm на {time_now()}.xlsx"):
+    # if os.path.exists(rf"{path_to_downloads}\2021-ММ-ДД-sm на 13.05.2022— копия.xlsx"):
         print("[INFO] Нужный файл найден  в папке 'Загрузки', поэтому переходим сразу к школьному сайту")
         school_login()
         school_upload()
@@ -43,7 +50,7 @@ def food_file_exists():
     else:
         mail_login()
         mail_download()
-        if os.path.exists(rf"{path_to_downloads}\2021-ММ-ДД-sm на {time_now()}— копия.xlsx"):
+        if os.path.exists(rf"{path_to_downloads}\2021-ММ-ДД-sm на {time_now()}.xlsx"):
             school_login()
             school_upload()
             driver.close()
@@ -64,28 +71,28 @@ def mail_login():
     driver.implicitly_wait(20)
     try:
         input_name = driver.find_element_by_tag_name("input")
-        sleep(2)
+        sleep(3)
         input_name.send_keys("alex.martyn0284")
-        sleep(1)
+        sleep(3)
         input_name.send_keys(Keys.ENTER)
-        sleep(2)
+        sleep(3)
         input_password_field = driver.find_element_by_name("password")
         input_password_field.send_keys("Reremedy1")
-        sleep(2)
+        sleep(3)
         input_password_field.send_keys(Keys.ENTER)
         driver.implicitly_wait(20)
     except selenium.common.exceptions.NoSuchElementException:
         input_name = driver.find_element_by_id("login")
-        sleep(2)
+        sleep(3)
         input_name.send_keys("alex.martyn0284")
-        sleep(2)
+        sleep(3)
         input_password_field = driver.find_element_by_id("password")
-        sleep(2)
+        sleep(3)
         input_password_field.send_keys("Reremedy1")
-        sleep(2)
+        sleep(3)
         accept_credentials_button = driver.find_element_by_id("EnterBtn")
         accept_credentials_button.click()
-        sleep(2)
+        sleep(3)
 
 
 
@@ -99,12 +106,12 @@ def mail_download():
         href = link.get_attribute("href")
         href_list.append(href)
         count = 0
-    for href in href_list:
+    for href in href_list[0:7]:
         driver.get(href)
         driver.implicitly_wait(20)
         sender = driver.find_element_by_class_name("letter-contact.letter-contact_pony-mode")
-        sleep(2)
-        if sender.text != "Al Martyn":
+        sleep(3)
+        if sender.text != "Надежда Красса":
             print("[INFO] Не тот отправитель")
             continue
         else:
@@ -116,13 +123,13 @@ def mail_download():
                 continue
             reveal_the_small = driver.find_element_by_class_name("_1rxuLJo77v4lUrVe4mnNM6")
             searched_file = driver.find_element_by_xpath("/html/body/div[5]/div/div[1]/div[1]/div/div[2]/span/div[2]/div/div/div/div/div/div/div[2]/div[1]/div[3]/div/div[1]/div[1]/div/div/div/div/div/div[1]/div/div/div[1]/div/div[2]/small")
-            sleep(2)
-            if searched_file.text == f"2021-ММ-ДД-sm на {time_now()}— копия.xlsx":
+            sleep(3)
+            if searched_file.text == f"2021-ММ-ДД-sm на {time_now()}.xlsx":
                 action = ActionChains(driver)
                 action.move_to_element(reveal_the_small).perform()
                 download_file = driver.find_element_by_link_text("Скачать")
                 action.move_to_element(download_file).click(download_file).perform()
-                sleep(2)
+                sleep(3)
                 print("[INFO] Качаем файл")
                 print("[INFO] Файл найден и успешно сохранен!")
                 break
@@ -131,19 +138,16 @@ def mail_download():
                 continue
 
 
-
-
-
 def school_login():
     print("[INFO] Авторизуемся на школьном сайте")
     driver.get("https://school-perv.educrimea.ru/user/login")
     driver.implicitly_wait(20)
     login_field = driver.find_element_by_id("loginform-email")
     login_field.send_keys("uber0284@gmail.com")
-    sleep(2)
+    sleep(3)
     password_field = driver.find_element_by_id("loginform-password")
     password_field.send_keys("Reremedy1")
-    sleep(2)
+    sleep(3)
     enter_button = driver.find_element_by_name("login-button")
     enter_button.click()
     sleep(3)
@@ -151,7 +155,7 @@ def school_login():
 def school_upload():
     print("[INFO] Загружаем скачанный с почты файл на школьный сайт")
     action = ActionChains(driver)
-    sleep(1)
+    sleep(3)
     conditions_link = driver.find_element_by_link_text("Условия")
     conditions_link.click()
     sleep(5)
@@ -161,7 +165,7 @@ def school_upload():
     sleep(5)
     add_files = driver.find_element_by_link_text("Добавить файлы").click()
     driver.switch_to.frame(4)
-    sleep(2)
+    sleep(3)
     activation = driver.find_element_by_id("nav-l1_Lw")
     action.move_to_element(activation).perform()
     sleep(3)
@@ -173,7 +177,7 @@ def school_upload():
     action.move_to_element(hover).perform()
     sleep(3)
     choose_file = driver.find_element_by_xpath("//input[@type='file']")
-    choose_file.send_keys(rf"C:\Users\{username}\Downloads\2021-ММ-ДД-sm на {time_now()}— копия.xlsx")
+    choose_file.send_keys(rf"{path_to_downloads}\2021-ММ-ДД-sm на {time_now()}.xlsx")
     sleep(5)
     arrow_button = driver.find_element_by_css_selector("div.elfinder-buttonset:nth-child(3) > div:nth-child(1)")
     action.move_to_element(arrow_button).perform()
@@ -191,7 +195,6 @@ def file_delete():
 
 
 def main():
-    # schedule()
     time_now()
     food_file_exists()
 
